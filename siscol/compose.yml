@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "bundle install && ./bin/rails server -b 0.0.0.0 -p 3001"
+    environment:
+      RAILS_ENV: development
+      BUNDLE_WITH: "development test"
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+    stdin_open: true
+    tty: true
+
+volumes:
+  bundle: {}
